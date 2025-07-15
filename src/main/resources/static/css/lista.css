@@ -1,0 +1,113 @@
+/* Contenedor centrado */
+.centrado-contenido {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Título */
+.centrado-contenido > h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.tabla-conciertos {
+  border-collapse: separate !important;
+  border-spacing: 0 12px;
+  width: 100%;
+}
+
+.tabla-conciertos thead {
+  background-color: #f0f3f8;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.tabla-conciertos thead th:first-child {
+  border-top-left-radius: 8px;
+}
+
+.tabla-conciertos thead th:last-child {
+  border-top-right-radius: 8px;
+}
+
+.tabla-conciertos th,
+.tabla-conciertos td {
+  border: none !important;
+  vertical-align: middle;
+  padding: 14px 12px;
+  white-space: nowrap;
+}
+
+
+.foto-concierto {
+  width: 80px;
+  height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.tabla-conciertos tbody tr {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.tabla-conciertos tbody tr:nth-child(odd) {
+  background-color: #f9fafa;
+}
+
+.tabla-conciertos tbody tr:hover {
+  background-color: #e6efff;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.tabla-conciertos td a.btn-info {
+  background-color: #00bcd4;
+  border: none;
+}
+
+.tabla-conciertos td a.btn-info:hover {
+  background-color: #0097a7;
+}
+
+.tabla-conciertos th:nth-child(1),
+.tabla-conciertos td:nth-child(1) {
+  width: 90px;
+}
+
+.tabla-conciertos th:nth-child(2),
+.tabla-conciertos td:nth-child(2) {
+  width: 160px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.tabla-conciertos th:nth-child(3),
+.tabla-conciertos td:nth-child(3),
+.tabla-conciertos th:nth-child(4),
+.tabla-conciertos td:nth-child(4),
+.tabla-conciertos th:nth-child(5),
+.tabla-conciertos td:nth-child(5) {
+  width: 100px;
+  text-align: center;
+}
+
+.tabla-conciertos th:nth-child(6),
+.tabla-conciertos td:nth-child(6) {
+  width: 140px;
+  white-space: normal;
+}
+
+.tabla-conciertos th:nth-child(7),
+.tabla-conciertos td:nth-child(7) {
+  width: 80px;
+  text-align: center;
+}

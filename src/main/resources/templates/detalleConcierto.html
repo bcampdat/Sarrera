@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8" />
+<title>Detalle Concierto</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/menu.css" />
+<link rel="stylesheet" href="/css/detalle.css" />
+</head>
+
+<body>
+	<div th:replace="_plantilla :: cabecera"></div>
+	<div th:replace="_plantilla :: menu"></div>
+
+	<main class="mt-5 py-5 detalle-container">
+		<div class="card detalle-card shadow-lg">
+			<div class="row g-0 flex-column flex-md-row">
+
+				<div class="col-md-5">
+					<img th:src="@{/concierto/imagen/{foto}(foto=${concierto.foto})}"
+						class="detalle-img"
+						th:alt="'Foto del concierto de ' + ${concierto.grupo}" />
+				</div>
+
+				<div class="col-md-7">
+					<div class="card-body p-4">
+						<h4 class="card-title fw-bold" th:text="${concierto.grupo}"></h4>
+
+						<p class="card-text">
+							<strong>Precio:</strong> <span th:text="${concierto.precio}"></span>
+							€
+						</p>
+						<p class="card-text">
+							<strong>Fecha:</strong> <span
+								th:text="${#temporals.format(concierto.fecha, 'dd/MM/yyyy')}"></span>
+						</p>
+						<p class="card-text">
+							<strong>Aforo:</strong> <span th:text="${concierto.aforo}"></span>
+						</p>
+						<p class="card-text mb-4">
+							<strong>Sala:</strong> <span
+								th:text="${concierto.ubicacion.nombreSala}"></span>
+						</p>
+						<a th:href="@{/entradas/comprar/{id}(id=${concierto.id})}" class="btn mb-2 btn-outline-warning rounded-pill w-100">Comprar entradas</a>
+						<a href="/conciertos" class="btn btn-outline-primary rounded-pill w-100">Volver</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+
+	<div th:replace="_plantilla :: pie"></div>
+	<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

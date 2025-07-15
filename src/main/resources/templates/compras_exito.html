@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="icon" type="image/png" href="/logo/entradas.png">
+
+	<title>Compra exitosa</title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/css/menu.css" />
+	<link rel="stylesheet" href="/css/ticket.css" />
+
+</head>
+
+<body>
+
+	<div th:replace="_plantilla :: cabecera"></div>
+	<div th:replace="_plantilla :: menu"></div>
+
+	<main>
+		<section>
+			<div class="mt-4">
+				<h2 class="mb-4">
+					Entradas compradas para <span th:text="${concierto.grupo}"></span>
+				</h2>
+
+				<div class="ticket-wrapper" th:each="eqr : ${entradasQR}">
+					<div class="ticket-card d-flex flex-md-row flex-column">
+
+						<!-- Imagen -->
+						<div class="ticket-img">
+							<img th:src="@{'/images/' + ${concierto.foto}}" alt="Concierto">
+						</div>
+
+						<!-- Información -->
+						<div class="ticket-info p-4 flex-grow-1">
+							<h5 th:text="${concierto.grupo}">Grupo</h5>
+							<p>
+								Fecha: <span th:text="${concierto.fecha}"></span><br> Sala:
+								<span th:text="${concierto.ubicacion.nombreSala}"></span><br>
+								Dirección: <span th:text="${concierto.ubicacion.direccion}"></span><br>
+								Precio: <span th:text="${concierto.precio}"></span> €
+							</p>
+							<p class="mb-0">
+								<strong>Código:</strong> <span th:text="${eqr.entrada.codigo}"></span>
+							</p>
+						</div>
+
+						<!-- QR -->
+						<div class="ticket-qr p-4 d-flex align-items-center justify-content-center">
+							<img th:src="'data:image/png;base64,' + ${eqr.qrBase64}" alt="QR Code">
+						</div>
+					</div>
+				</div>
+		</section>
+		<div class="d-flex justify-content-end mt-4">
+			<a href="/" class="w-100 rounded-pill small btn btn-success">Continuar comprando</a>
+		</div>
+	</main>
+
+	<div th:replace="_plantilla :: pie"></div>
+
+	<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

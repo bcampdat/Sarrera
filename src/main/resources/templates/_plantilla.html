@@ -1,0 +1,81 @@
+<!-- CABECERA -->
+<div th:fragment="cabecera">
+	<header
+		class="dashboard-header d-flex justify-content-between align-items-center px-4">
+		<div id="header_izq" class="d-flex align-items-center gap-3">
+			<img src="/logo/entradas.jpg" alt="Logo" class="logo-header">
+			<h1 class="mb-0 fs-4 fw-bold text-primary">SARRERA</h1>
+		</div>
+
+		<div id="header_der" class="d-flex align-items-center gap-3">
+			<a href="https://www.facebook.com" target="_blank" class="text-dark"
+				title="Facebook"> <i class="fab fa-facebook-f"></i>
+			</a> <a href="https://www.instagram.com" target="_blank"
+				class="text-dark" title="Instagram"> <i class="fab fa-instagram"></i>
+			</a>
+			<div sec:authorize="isAuthenticated()"
+				class="d-flex align-items-center gap-2">
+				<span th:text="${#authentication.name}"
+					class="fw-semibold text-primary"></span>
+				<form th:action="@{/logout}" method="post" class="m-0">
+					<button type="submit"
+						class="btn btn-sm btn-outline-danger rounded-pill px-3">
+						<i class="fas fa-sign-out-alt"></i> Salir
+					</button>
+				</form>
+			</div>
+		</div>
+	</header>
+</div>
+
+
+<!-- MENÚ LATERAL -->
+<div th:fragment="menu">
+	<nav class="dashboard-sidebar">
+		<ul class="nav flex-column">
+			<li class="nav-item"><a th:href="@{/MenuConciertos}"
+				class="nav-link">Conciertos</a></li>
+			<li class="nav-item"><a th:href="@{/MenuSalas}" class="nav-link">
+					Salas</a></li>
+			<li class="nav-item"><a th:href="@{/MenuEntradas}"
+				class="nav-link">Entradas</a></li>
+			<li class="nav-item"><a th:href="@{/conciertos}"
+				class="nav-link">Listado</a></li>
+		</ul>
+
+		<div class="text-center mt-4">
+			<button class="btn btn-outline-primary btn-sm rounded-pill px-3"
+				type="button" data-bs-toggle="collapse"
+				data-bs-target="#busquedaCollapse" aria-expanded="false"
+				aria-controls="busquedaCollapse">
+				<i class="fa fa-search"></i> Buscar
+			</button>
+		</div>
+
+		<div
+			th:classappend="${(grupo != null or fecha != null) ? 'show' : ''}"
+			class="collapse mt-3" id="busquedaCollapse">
+			<form method="get" action="/buscar" class="pt-2">
+				<input type="text" name="grupo" class="form-control mb-2 rounded"
+					placeholder="Grupo" th:value="${grupo}" /> <input type="date"
+					name="fecha" class="form-control mb-2 rounded" th:value="${fecha}" />
+				<div class="d-grid gap-2">
+					<button type="submit" class="btn btn-primary btn-sm rounded-pill">Buscar</button>
+					<a href="/Conciertos" class="btn btn-secondary btn-sm rounded-pill">Limpiar</a>
+				</div>
+			</form>
+		</div>
+	</nav>
+</div>
+
+
+<!-- PIE -->
+<div th:fragment="pie">
+  <footer class="text-center py-3 border-top small text-muted">
+    <p class="mb-1">
+      <i class="fas fa-copyright me-1"></i>
+      2025 - Designed by: <span class="fw-semibold text-dark">Ipartek S.C</span>
+    </p>
+  </footer>
+</div>
+

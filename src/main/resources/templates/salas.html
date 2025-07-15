@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/logo/entradas.png">
+  <title>Salas</title>
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/css/menu.css" />
+</head>
+
+<body>
+  <!-- Cabecera + Sidebar -->
+  <div th:replace="_plantilla :: cabecera"></div>
+  <div th:replace="_plantilla :: menu"></div>
+
+  <main>
+    <section class="container-fluid px-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="fw-bold text-success mb-0">Lista de Salas
+        </h2>
+      </div>
+
+      <div class="table-responsive shadow-sm rounded bg-white p-3">
+        <table class="table align-middle table-hover">
+          <thead class="table-light">
+            <tr>
+              <th>Nombre Sala</th>
+              <th>Dirección</th>
+              <th>Capacidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="ubicacion : ${listaUbicaciones}">
+              <td class="fw-semibold text-dark" th:text="${ubicacion.nombreSala}"></td>
+              <td th:text="${ubicacion.direccion}"></td>
+              <td th:switch="${ubicacion.nombreSala}">
+                <span th:case="'Sala BBK'">550</span>
+                <span th:case="'Kafe Antzokia'">870</span>
+                <span th:case="'Cotton Club'">110</span>
+                <span th:case="'Escenario Santander'">973</span>
+                <span th:case="'Black Bird Club'">150-200</span>
+                <span th:case="'Sala Acapulco'">500</span>
+                <span th:case="'La Salvaje'">130</span>
+                <span th:case="'Mardi Gras'">130</span>
+                <span th:case="'Sala Capitol'">1000</span>
+                <span th:case="'El Gran Café'">1000 aprox.</span>
+                <span th:case="'Studio 54 León'">1000 aprox.</span>
+                <span th:case="*">No disponible</span>
+              </td>
+             
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div th:replace="_plantilla :: pie"></div>
+
+  <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+img.object-fit-cover {
+	object-fit: cover;
+	height: 100%;
+	max-height: 360px;
+}
+
+@media (max-width : 768px) {
+	img.object-fit-cover {
+		max-height: 240px;
+		border-radius: 1rem 1rem 0 0;
+	}
+}
+
+.card {
+	border: none;
+	border-radius: 1.5rem;
+}
+
+h4 {
+	font-size: 1.4rem;
+}
+
+.form-label-sm {
+	font-size: 0.875rem;
+}
+
+.form-control-sm {
+	font-size: 0.9rem;
+	padding: 0.4rem 0.75rem;
+	height: auto;
+}
+
+/* Botón más ajustado visualmente */
+button.btn-warning {
+	padding: 0.6rem 1rem;
+	font-size: 0.95rem;
+}
+
+/* En móviles, más aire entre bloques */
+@media (max-width : 768px) {
+	.card .p-4 {
+		padding: 1.5rem 1.2rem;
+	}
+
+	.form-control-sm {
+		font-size: 0.85rem;
+	}
+
+	.btn {
+		font-size: 0.9rem;
+	}
+}
+
+.agotado-banner,
+.vendido-banner {
+	position: absolute;
+	   top: 60%;             /* Lo colocamos verticalmente en el centro */
+	   left: 20%;            /* Lo colocamos horizontalmente en el centro */
+	   width: 140%;          /* Suficiente ancho para cubrir diagonal */
+	   background: rgba(255, 0, 0, 0.85);
+	   color: black;
+	   font-weight: 900;
+	   font-size: 2rem;
+	   text-align: center;
+	   padding: 0.5rem 0;
+	   transform: translate(-50%, -50%) rotate(-45deg); /* Centrar y rotar */
+	   box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+	   z-index: 1000;        /* Muy por encima */
+	   pointer-events: none;
+	   user-select: none;    /* Evita que se seleccione el texto */
+	   letter-spacing: 0.1em;
+	   text-transform: uppercase;
+}
+
+/* Listado - tarjetas concierto */
+/* Imagen de tarjeta horizontal */
+.concierto-img {
+	object-fit: cover;
+	height: 100%;
+	max-height: 180px;
+	border-radius: 0;
+}
+
+/* Responsive ajustes */
+@media (max-width: 768px) {
+	.concierto-img {
+		max-height: 200px;
+		border-radius: 1rem 1rem 0 0;
+	}
+}

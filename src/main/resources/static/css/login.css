@@ -1,0 +1,39 @@
+/* login.css */
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f8fa;
+  padding: 20px;
+}
+
+.login-logo {
+  height: 100px;
+  width: auto;
+  margin-bottom: 30px;
+  border-radius: 10px;
+ 
+}
+
+.login-card {
+  background: white;
+  padding: 30px 25px;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-icon {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  color: #007bff;
+}
+
+.position-relative input {
+  padding-left: 35px;
+}

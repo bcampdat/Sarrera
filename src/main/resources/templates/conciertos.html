@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/logo/entradas.png">
+  <title>Conciertos</title>
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/css/menu.css" />
+</head>
+
+<body>
+  <!-- Cabecera + Sidebar -->
+  <div th:replace="_plantilla :: cabecera"></div>
+  <div th:replace="_plantilla :: menu"></div>
+
+  <main>
+    <section class="container-fluid px-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="fw-bold text-primary mb-0">Lista de Conciertos</h2>
+        <a th:href="@{/nuevo}" class="btn btn-primary rounded-pill shadow-sm">
+          <i class="fa fa-plus me-1"></i> Nuevo Concierto
+        </a>
+      </div>
+
+      <div class="table-responsive shadow-sm rounded bg-white p-3">
+        <table class="table align-middle table-hover">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Foto</th>
+              <th scope="col">Grupo</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Aforo</th>
+              <th scope="col">Ubicación</th>
+              <th scope="col" class="text-end">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="concierto : ${listaConciertos}">
+              <td>
+                <img th:src="@{/concierto/imagen/{foto}(foto=${concierto.foto})}"
+                     alt="Foto Concierto"
+                     class="rounded shadow-sm" style="width: 80px; height: auto;" />
+              </td>
+              <td th:text="${concierto.grupo}" class="fw-semibold text-dark"></td>
+              <td th:text="${#temporals.format(concierto.fecha, 'dd/MM/yyyy')}"></td>
+              <td th:text="${concierto.precio + ' €'}"></td>
+              <td th:text="${concierto.aforo}"></td>
+              <td th:text="${concierto.ubicacion.nombreSala}"></td>
+              <td class="text-end">
+                <a th:href="@{/detalle(id=${concierto.id})}"
+                   class="btn btn-sm btn-outline-info rounded-circle me-1"
+                   title="Detalle">
+                  <i class="fa fa-eye"></i>
+                </a>
+                <a th:href="@{/modificar(id=${concierto.id})}"
+                   class="btn btn-sm btn-outline-warning rounded-circle me-1"
+                   title="Modificar">
+                  <i class="fa fa-edit"></i>
+                </a>
+                <a th:href="@{/eliminar(id=${concierto.id})}"
+                   class="btn btn-sm btn-outline-danger rounded-circle"
+                   title="Eliminar">
+                  <i class="fa fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(listaConciertos)}">
+              <td colspan="7" class="text-center py-4 text-muted">
+                <i class="fa fa-music me-2"></i> No hay conciertos disponibles.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div th:replace="_plantilla :: pie"></div>
+
+  <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

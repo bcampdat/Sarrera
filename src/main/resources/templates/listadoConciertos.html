@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+<meta charset="UTF-8" />
+<title>Listado de Conciertos</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/menu.css" />
+<link rel="stylesheet" href="/css/lista.css" />
+
+</head>
+
+<body>
+	<div th:replace="_plantilla :: cabecera"></div>
+	<div th:replace="_plantilla :: menu"></div>
+
+	<main class="mt-6">
+		<div class="centrado-contenido">
+			<h2>Conciertos Disponibles</h2>
+
+			<table class="table table-striped tabla-conciertos">
+				<thead>
+					<tr>
+
+						<th>Foto</th>
+						<th>Grupo</th>
+						<th>Precio</th>
+						<th>Fecha</th>
+						<th>Aforo</th>
+						<th>Sala</th>
+						<th>Ver Detalle</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="concierto : ${listaConciertos}"
+						th:classappend="${concierto.fecha.isBefore(T(java.time.LocalDate).now())} ? 'table-secondary text-muted'">
+						<td><img
+							th:src="@{/concierto/imagen/{foto}(foto=${concierto.foto})}"
+							alt="Foto" class="foto-concierto img-thumbnail rounded" /></td>
+						<td th:text="${concierto.grupo}"></td>
+						<td
+							th:text="${#numbers.formatDecimal(concierto.precio, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
+						<td th:text="${#temporals.format(concierto.fecha, 'dd/MM/yyyy')}"></td>
+						<td th:text="${concierto.aforo}"></td>
+						<td th:text="${concierto.ubicacion.nombreSala}">Ubicación</td>
+						<td>
+							<!-- Si es antes de hoy --> <span
+							th:if="${concierto.fecha.isBefore(T(java.time.LocalDate).now())}"
+							class="text-danger fw-bold">Cancelado</span>
+							<a th:if="${concierto.fecha.isBefore(T(java.time.LocalDate).now())}"
+							th:href="@{/eliminar(id=${concierto.id})}"
+							class="btn btn-grey btn-sm ms-1" title="Eliminar"> <i
+								class="fa fa-trash"></i>
+						</a>  <!-- Si es distinto de hoy futuro-->
+						<a th:if="${!concierto.fecha.isBefore(T(java.time.LocalDate).now())}"
+							th:href="@{'/detalle?id=' + ${concierto.id}}"
+							class="btn btn-sm btn-outline-info rounded-circle me-1" title="Ver detalle"> <i
+								class="fa fa-info-circle"></i>
+						</a>
+						</td>
+					</tr>
+					<tr th:if="${#lists.isEmpty(listaConciertos)}">
+						<td colspan="7" class="text-center">No hay conciertos
+							disponibles</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</main>
+
+	<div th:replace="_plantilla :: pie"></div>
+	<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

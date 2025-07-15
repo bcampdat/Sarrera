@@ -1,0 +1,92 @@
+.ticket-wrapper {
+	margin-bottom: 2rem;
+}
+
+/* Tarjeta tipo ticket */
+.ticket-card {
+	background: #ffffff;
+	border-radius: 1.5rem;
+	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+	overflow: hidden;
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+}
+
+/* Imagen */
+.ticket-img {
+	flex: 0 0 200px;
+	overflow: hidden;
+	border-radius: 1.5rem 0 0 1.5rem;
+}
+
+.ticket-img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+/* Información */
+.ticket-info {
+	flex: 1;
+	background-color: #f8f9fa;
+}
+
+/* QR */
+.ticket-qr {
+	flex: 0 0 140px;
+	background-color: #f8f9fa;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.ticket-qr img {
+	width: 100px;
+	height: 100px;
+	object-fit: contain;
+}
+
+/* Troquelado efecto ticket */
+.ticket-card::before, .ticket-card::after {
+	content: "";
+	position: absolute;
+	width: 30px;
+	height: 60px;
+	background: #f8f9fa;
+	border-radius: 50%;
+	z-index: 1;
+}
+
+.ticket-card::before {
+	left: -15px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.ticket-card::after {
+	right: -15px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+/* Responsive */
+@media ( max-width : 768px) {
+	.ticket-card {
+		flex-direction: column;
+	}
+	.ticket-img {
+		border-radius: 1.5rem 1.5rem 0 0;
+		width: 100%;
+		height: 180px;
+	}
+	.ticket-card::before, .ticket-card::after {
+		display: none;
+	}
+	.ticket-qr {
+		padding-top: 1rem;
+		padding-bottom: 1.5rem;
+	}
+}

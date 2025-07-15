@@ -1,0 +1,49 @@
+/* detalle.css */
+
+.detalle-container {
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.detalle-card {
+    max-width: 1000px; 
+    border: none;
+    border-radius: 2rem;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.detalle-img {
+    width: 100%;
+    height: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 2rem 0 0 2rem;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .detalle-img {
+        max-height: 300px;
+        border-radius: 2rem 2rem 0 0;
+    }
+}
+
+.card-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.card-text {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+}
+
+.btn-primary {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/png" href="/logo/entradas.png">
+<title th:text="${formulario == 'registro'} ? 'Registro' : 'Login'">Login</title>
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/login.css" />
+
+</head>
+
+<body>
+
+	<main class="login-container">
+		<img src="/logo/entradas.png" alt="Logo" class="login-logo mb-4" />
+		<div class="login-card">
+			<h3 class="text-center mb-4"
+				th:text="${formulario == 'registro'} ? 'Registrarse' : 'Iniciar sesión'"></h3>
+
+			<form th:if="${formulario == 'login'}" th:action="@{/login}"
+				method="post">
+				<div class="mb-3 position-relative">
+					<i class="fa fa-user form-icon"></i> <input type="text"
+						name="username" class="form-control" placeholder="Usuario"
+						required />
+				</div>
+				<div class="mb-3 position-relative">
+					<i class="fa fa-lock form-icon"></i> <input type="password"
+						name="password" class="form-control" placeholder="Contraseña"
+						required />
+				</div>
+				<div class="d-grid">
+					<button type="submit" class="btn btn-primary">Entrar</button>
+				</div>
+			</form>
+
+			<!-- FORMULARIO REGISTRO -->
+			<form th:if="${formulario == 'registro'}" th:action="@{/registro}"
+				method="post">
+				<div class="mb-3 position-relative">
+					<i class="fa fa-user form-icon"></i> <input type="text"
+						name="username" class="form-control" placeholder="Nuevo usuario"
+						required />
+				</div>
+				<div class="mb-3 position-relative">
+					<i class="fa fa-lock form-icon"></i> <input type="password"
+						name="password" class="form-control"
+						placeholder="Nueva contraseña" required />
+				</div>
+				<div class="d-grid">
+					<button type="submit" class="btn btn-primary">Registrarse</button>
+				</div>
+
+				<div th:if="${error}" class="text-danger mt-3 text-center"
+					th:text="${error}"></div>
+			</form>
+
+			<div th:if="${param.error}" class="text-danger mt-3 text-center">Credenciales
+				inválidas</div>
+			<div th:if="${param.logout}" class="text-success mt-3 text-center">Sesión
+				cerrada correctamente</div>
+		</div>
+
+		<div class="text-center mt-3">
+			<a th:if="${formulario == 'login'}"
+				th:href="@{/login(form='registro')}">¿No tienes cuenta?
+				Regístrate</a> <a th:if="${formulario == 'registro'}"
+				th:href="@{/login(form='login')}">¿Ya tienes cuenta? Inicia
+				sesión</a>
+		</div>
+
+		<div th:if="${param.registro}" class="text-success mt-3 text-center">
+			Registro exitoso. Por favor, inicia sesión.</div>
+
+	</main>
+
+	<div th:replace="_plantilla :: pie"></div>
+
+	<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
