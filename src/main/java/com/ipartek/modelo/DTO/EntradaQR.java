@@ -10,5 +10,6 @@ import lombok.Data;
 public class EntradaQR {
     private Entrada entrada;
     private String qrBase64;
+    private String barcodeBase64;
 }
 

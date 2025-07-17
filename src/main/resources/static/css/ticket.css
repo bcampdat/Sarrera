@@ -19,6 +19,7 @@
 	flex: 0 0 200px;
 	overflow: hidden;
 	border-radius: 1.5rem 0 0 1.5rem;
+	position: relative; /* Necesario para posicionar el logo dentro */
 }
 
 .ticket-img img {
@@ -27,6 +28,19 @@
 	object-fit: cover;
 	display: block;
 }
+
+/* Logo sobre la imagen */
+.logo-overlay {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+	max-height: 50px;
+	max-width: 50px;
+	object-fit: contain;
+	opacity: 0.9;
+	z-index: 2;
+}
+
 
 /* Información */
 .ticket-info {
@@ -48,6 +62,30 @@
 	height: 100px;
 	object-fit: contain;
 }
+
+/* Código de barras vertical al final del ticket */
+.ticket-barcode {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100%;
+	width: 40px;
+	background-color: #ffffff;
+	border-left: 1px dashed #ccc;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 5px;
+	z-index: 2;
+}
+
+.barcode-vertical {
+	transform: rotate(90deg);
+	transform-origin: center;
+	max-height: 120px;
+	object-fit: contain;
+}
+
 
 /* Troquelado efecto ticket */
 .ticket-card::before, .ticket-card::after {

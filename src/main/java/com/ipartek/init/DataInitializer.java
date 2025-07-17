@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import com.ipartek.modelo.Ubicacion;
-import com.ipartek.modelo.Usuario;
 import com.ipartek.repository.UbicacionRepository;
 
 import jakarta.annotation.PostConstruct;

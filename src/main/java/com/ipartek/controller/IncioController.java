@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ipartek.modelo.Concierto;
@@ -47,7 +46,7 @@ public class IncioController {
 		return "index";
 	}
 
-	@RequestMapping("/conciertos")
+	@GetMapping("/conciertos")
 	public String listarConciertos(Model model) {
 
 		model.addAttribute("listaConciertos", conciertoRepo.findAll());
@@ -67,7 +66,7 @@ public class IncioController {
 		return "conciertos";
 	}
 
-	@RequestMapping("/MenuSalas")
+	@GetMapping("/MenuSalas")
 	public String cargarSalas(Model model) {
 		List<Ubicacion> listaUbicaciones = ubicacionRepo.findAll();
 		model.addAttribute("listaUbicaciones", listaUbicaciones);

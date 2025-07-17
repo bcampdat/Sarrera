@@ -24,7 +24,8 @@
 			<h2 class="mb-4">Conciertos disponibles</h2>
 
 			<div class="d-flex flex-column gap-4">
-				<div th:each="concierto : ${conciertos}" class="card shadow-sm rounded-4 overflow-hidden position-relative">
+				<div th:each="concierto : ${conciertos}"
+					class="card shadow-sm rounded-4 overflow-hidden position-relative">
 
 					<!-- Banner AGOTADO -->
 					<div th:if="${entradasDisponiblesMap[concierto.id] == 0}" class="agotado-banner">
@@ -53,9 +54,12 @@
 										<i class="fa-regular fa-calendar"></i>
 										<span th:text="${concierto.fecha}"></span>
 									</p>
+									<p class="fw-bold mb-1">
+										<span th:text="${concierto.ubicacion.nombreSala}"></span>
+									</p>
 									<p class="mb-1">
 										<i class="fa-solid fa-location-dot"></i>
-										<span th:text="${concierto.ubicacion.nombreSala}"></span>
+										<span th:text="${concierto.ubicacion.direccion}"></span>
 									</p>
 									<p class="fw-bold mb-0">
 										Precio: <span th:text="${concierto.precio}"></span> €

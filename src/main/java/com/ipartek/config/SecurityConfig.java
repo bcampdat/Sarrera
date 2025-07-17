@@ -14,7 +14,7 @@ public class SecurityConfig {
     private ValidarUsuarioProvider validarUsuarioProvider;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
         	.authenticationProvider(validarUsuarioProvider)
             .authorizeHttpRequests(auth -> auth
@@ -44,7 +44,7 @@ public class SecurityConfig {
  
 	 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(); 
     }
 }

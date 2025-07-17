@@ -20,7 +20,7 @@ public class LoginController {
 	private UsuarioService usuarioService;
 
 	@GetMapping("/login")
-	public String cargarLogin(@RequestParam(value = "form", defaultValue = "login") String form, Model model) {
+	public String cargarLogin(@RequestParam( defaultValue = "login") String form, Model model) {
 		model.addAttribute("formulario", form);
 		return "login";
 	}

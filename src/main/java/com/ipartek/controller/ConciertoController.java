@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -109,7 +108,7 @@ public class ConciertoController {
 	}
 
 	@GetMapping("/modificar")
-	public String modificarConcierto(@RequestParam("id") int id, Model model) {
+	public String modificarConcierto(@RequestParam int id, Model model) {
 
 		Optional<Concierto> con = conciertoRepo.findById(id);
 
@@ -122,7 +121,7 @@ public class ConciertoController {
 	}
 
 	@GetMapping("/detalle")
-	public String detalleConcierto(@RequestParam("id") int id, Model model) {
+	public String detalleConcierto(@RequestParam int id, Model model) {
 		Optional<Concierto> optCon = conciertoRepo.findById(id);
 		if (optCon.isPresent()) {
 			model.addAttribute("concierto", optCon.get());
@@ -132,7 +131,7 @@ public class ConciertoController {
 	}
 
 	@GetMapping("/eliminar")
-	public String eliminarConcierto(@RequestParam("id") int id) {
+	public String eliminarConcierto(@RequestParam int id) {
 		Optional<Concierto> optCon = conciertoRepo.findById(id);
 		if (optCon.isPresent()) {
 			Concierto concierto = optCon.get();
@@ -168,7 +167,7 @@ public class ConciertoController {
 				.body(recurso);
 	}
 
-	@RequestMapping("/buscar")
+	@GetMapping("/buscar")
 	public String cargarListadoConciertos(@RequestParam(required = false) String grupo,
 			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
 			Model model) {
