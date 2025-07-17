@@ -28,6 +28,14 @@
 				<h2 class="mb-4">
 					Entradas compradas <span th:text="${concierto.grupo}"></span>
 				</h2>
+				<p class="mb-4">
+					<strong>Total entradas para este concierto:</strong> <span
+						th:text="${totalUsuario}"></span> entrada(s)
+				</p>
+				<p class="mb-4">
+					<strong>Total a pagar:</strong> <span th:text="${totalPagar}"></span>
+					€
+				</p>
 
 				<div class="ticket-wrapper" th:each="eqr : ${entradasQR}">
 					<div class="ticket-card d-flex flex-md-row flex-column">

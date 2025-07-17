@@ -1,5 +1,6 @@
 package com.ipartek.controller;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ipartek.modelo.Concierto;
 import com.ipartek.modelo.Entrada;
@@ -54,9 +56,11 @@ public class EntradasContoller {
 
     @PostMapping("/comprar/{conciertoId}")
     public String procesarCompra(@PathVariable int conciertoId,
-    							@RequestParam int cantidad,
-                                Principal principal,
-                                Model model) throws Exception {
+                                 @RequestParam int cantidad,
+                                 Principal principal,
+                                 RedirectAttributes redirectAttributes,
+                                 Model model) throws Exception {
+        
         Optional<Concierto> conciertoOpt = conciertoRepo.findById(conciertoId);
         if (conciertoOpt.isEmpty()) {
             model.addAttribute("error", "Concierto no encontrado");
@@ -70,30 +74,44 @@ public class EntradasContoller {
         }
 
         String username = principal.getName();
+
         try {
             List<Entrada> entradasCompradas = entradaService.comprarEntradas(concierto, username, cantidad);
 
-            // Generar QR y codigo de barras para cada entrada y pasar a la vista
             List<EntradaQR> entradasQR = new ArrayList<>();
-            String baseUrl = "http://SARRERA-NIRE/entradas/validar-json/"; // SERIA MI RUTA
-            //String baseUrl = "http://localhost:8080/entradas/validar-json/";
-            
-            for (Entrada e : entradasCompradas) {        	 
-            	String qrContent = baseUrl + e.getCodigo();
-            	String qrBase64 = qrCodeService.generarCodigoQR(qrContent, 200, 200);
-            	String barcodeBase64 = qrCodeService.generarCodigoBarra(e.getCodigo(), 150, 100);
-                EntradaQR eqr = new EntradaQR(e, qrBase64, barcodeBase64);
-                entradasQR.add(eqr);
+            String baseUrl = "http://SARRERA-NIRE/entradas/validar-json/";
+
+            for (Entrada e : entradasCompradas) {
+                String qrContent = baseUrl + e.getCodigo();
+                String qrBase64 = qrCodeService.generarCodigoQR(qrContent, 200, 200);
+                String barcodeBase64 = qrCodeService.generarCodigoBarra(e.getCodigo(), 150, 100);
+                entradasQR.add(new EntradaQR(e, qrBase64, barcodeBase64));
             }
-            model.addAttribute("username", username); 
-            model.addAttribute("entradasQR", entradasQR);
-            model.addAttribute("concierto", concierto);
-            return "compras_exito";
+            
+            int totalEntradasUsuario = entradaService.contarEntradasUsuario(concierto.getId(), username);
+            BigDecimal totalPagar = concierto.getPrecio().multiply(BigDecimal.valueOf(entradasQR.size()));
+            
+            redirectAttributes.addFlashAttribute("entradasQR", entradasQR);
+            redirectAttributes.addFlashAttribute("concierto", concierto);
+            redirectAttributes.addFlashAttribute("username", username);
+            redirectAttributes.addFlashAttribute("totalUsuario", totalEntradasUsuario);
+            redirectAttributes.addFlashAttribute("totalPagar", totalPagar);
+
+            return "redirect:/entradas/compras-exito";  
 
         } catch (Exception ex) {
             model.addAttribute("error", ex.getMessage());
             return mostrarFormularioCompra(conciertoId, model);
         }
+    }
+
+    @GetMapping("/compras-exito")
+    public String mostrarCompra(Model model) {
+        // Si no hay entradas (por acceso directo o recarga), redirige
+        if (!model.containsAttribute("entradasQR")) {
+            return "redirect:/MenuEntradas";  // O al inicio, como prefieras
+        }
+        return "compras_exito";  // Vista segura, solo accesible tras compra válida
     }
     
     @GetMapping("/validar-json/{codigo}")
