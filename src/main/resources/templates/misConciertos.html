@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mis Conciertos</title>
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/menu.css" />
+<link rel="stylesheet" href="/css/ticket.css" />
+<link rel="stylesheet" href="/css/misConciertos.css" />
+</head>
+<body>
+	<div th:replace="_plantilla :: cabecera"></div>
+	<div th:replace="_plantilla :: menu"></div>
+
+	<main>
+		<section>
+			<div class="container mt-4">
+				<h2 class="d-flex align-items-center justify-content-between px-2"
+					style="font-size: 1.6rem;">
+					<div class="d-flex align-items-center gap-1">
+						<i class="fas fa-music"></i> Mis Conciertos
+					</div>
+					<div class="d-flex align-items-center gap-1"
+						style="padding-right: 4px;">
+						<i class="fas fa-user"></i>
+					</div>
+				</h2>
+
+				<div class="accordion" id="accordionConciertos"
+					th:if="${conciertosEntradas != null and !conciertosEntradas.isEmpty()}">
+
+					<div class="accordion-item"
+						th:each="dto, iterStat : ${conciertosEntradas}">
+						<h2 class="accordion-header"
+							th:id="'heading-' + ${iterStat.index}">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse"
+								th:data-bs-target="'#collapse-' + ${iterStat.index}"
+								th:aria-controls="'collapse-' + ${iterStat.index}"
+								aria-expanded="false" style="font-size: 1rem;">
+								<span th:text="${dto.concierto.grupo}">Grupo</span>
+							</button>
+						</h2>
+
+						<div th:id="'collapse-' + ${iterStat.index}"
+							class="accordion-collapse collapse"
+							th:attr="aria-labelledby='heading-' + ${iterStat.index}"
+							data-bs-parent="#accordionConciertos">
+							<div class="accordion-body" style="font-size: 1.2rem;">
+
+								<p class="small text-dark d-flex gap-3 flex-wrap">
+									<span class="bg-light px-2 rounded shadow-sm"> <strong>Fecha:</strong>
+										<span
+										th:text="${#temporals.format(dto.concierto.fecha, 'dd/MM/yyyy')}"></span>
+									</span> <span class="bg-light px-2 rounded shadow-sm"> <strong>Entradas:</strong>
+										<span th:text="${dto.numeroEntradas}"></span>
+									</span> <span class="bg-light px-2 rounded shadow-sm"> <strong>Total:</strong>
+										<span th:text="${dto.totalPagado}"></span> €
+									</span>
+								</p>
+
+								<!-- Aquí aplicamos .small-ticket para reducir tamaño -->
+								<div th:each="eqr : ${dto.entradasQR}"
+									class="ticket-wrapper small-ticket">
+									<div
+										class="ticket-card d-flex flex-row align-items-stretch position-relative">
+
+										<!-- Imagen con logo -->
+										<div class="ticket-img">
+											<img th:src="@{'/images/' + ${dto.concierto.foto}}"
+												alt="Concierto" /> <img src="/logo/entradas.png" alt="Logo"
+												class="logo-overlay" />
+										</div>
+
+										<!-- Info ticket -->
+										<div class="ticket-info p-3 flex-grow-1">
+											<h5 th:text="${dto.concierto.grupo}">Grupo</h5>
+											<p>
+												Fecha: <span
+													th:text="${#temporals.format(dto.concierto.fecha, 'dd/MM/yyyy')}"></span><br />
+												Sala: <span th:text="${dto.concierto.ubicacion.nombreSala}"></span><br />
+												Dirección: <span
+													th:text="${dto.concierto.ubicacion.direccion}"></span><br />
+												Precio: <span th:text="${dto.concierto.precio}"></span> €
+											</p>
+											<p class="mb-0">
+												<strong>Código:</strong> <span
+													th:text="${eqr.entrada.codigo}"></span>
+											</p>
+										</div>
+
+										<!-- QR -->
+										<div
+											class="ticket-qr d-flex align-items-center justify-content-center">
+											<img th:src="'data:image/png;base64,' + ${eqr.qrBase64}"
+												alt="QR Code" />
+										</div>
+
+										<!-- Código de barras vertical -->
+										<div
+											class="ticket-barcode d-flex align-items-center justify-content-center">
+											<img th:src="'data:image/png;base64,' + ${eqr.barcodeBase64}"
+												alt="Código de barras vertical" class="barcode-vertical" />
+										</div>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="d-flex justify-content-end mt-4">
+					<a href="/" class="w-100 rounded-pill small btn btn-success">Menú
+						Inicio</a>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<div th:replace="_plantilla :: pie"></div>
+	<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

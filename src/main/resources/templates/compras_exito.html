@@ -25,18 +25,58 @@
 	<main>
 		<section>
 			<div class="mt-4">
-				<h2 class="mb-4">
-					Entradas compradas <span th:text="${concierto.grupo}"></span>
+				<h2 class="mb-4 d-flex align-items-center justify-content-between">
+					<div class="d-flex align-items-center gap-2">
+						<img src="/logo/entradas.jpg" alt="Logo" class="logo-header"
+							style="height: 40px;" /> Compra realizada <span
+							th:text="${concierto.grupo}"></span>
+					</div>
+					<div class="d-flex align-items-center gap-2">
+						<i class="fas fa-user"></i> <span th:text="${username}"
+							class="fw-semibold"></span>
+					</div>
 				</h2>
-				<p class="mb-4">
-					<strong>Total entradas para este concierto:</strong> <span
-						th:text="${totalUsuario}"></span> entrada(s)
-				</p>
-				<p class="mb-4">
-					<strong>Total a pagar:</strong> <span th:text="${totalPagar}"></span>
-					€
-				</p>
+				<div class="accordion mt-5" id="resumenCompra">
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="headingResumen">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#collapseResumen"
+								aria-expanded="false" aria-controls="collapseResumen">
+								Resumen de la compra</button>
+						</h2>
+						<div id="collapseResumen" class="accordion-collapse collapse"
+							aria-labelledby="headingResumen" data-bs-parent="#resumenCompra">
+							<div class="accordion-body">
+								<ul class="list-group list-group-flush">
+									<li
+										class="list-group-item d-flex justify-content-between align-items-center px-0">
+										<div class="d-flex align-items-center gap-2">
+											<i class="fas fa-user"></i> <strong>Usuario:</strong>
+										</div> <span th:text="${username}"></span>
+									</li>
 
+									<li
+										class="list-group-item d-flex justify-content-between align-items-center px-0">
+										<strong>Número de entradas compradas:</strong> <span
+										th:text="${totalUsuario}"></span>
+									</li>
+									<li
+										class="list-group-item d-flex justify-content-between align-items-center px-0">
+										<strong>Precio por entrada:</strong> <span><span
+											th:text="${concierto.precio}"></span> €</span>
+									</li>
+									<li
+										class="list-group-item d-flex justify-content-between align-items-center px-0">
+										<strong>Total pagado:</strong> <span><span
+											th:text="${totalPagar}"></span> €</span>
+									</li>
+
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
 				<div class="ticket-wrapper" th:each="eqr : ${entradasQR}">
 					<div class="ticket-card d-flex flex-md-row flex-column">
 						<div class="ticket-img">

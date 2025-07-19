@@ -79,8 +79,8 @@ public class EntradasContoller {
             List<Entrada> entradasCompradas = entradaService.comprarEntradas(concierto, username, cantidad);
 
             List<EntradaQR> entradasQR = new ArrayList<>();
-            String baseUrl = "http://SARRERA-NIRE/entradas/validar-json/";
-
+            //String baseUrl = "http://SARRERA-NIRE/entradas/validar-json/";
+            String baseUrl = "http://http://localhost:8080//entradas/validar-json/";
             for (Entrada e : entradasCompradas) {
                 String qrContent = baseUrl + e.getCodigo();
                 String qrBase64 = qrCodeService.generarCodigoQR(qrContent, 200, 200);
@@ -89,7 +89,7 @@ public class EntradasContoller {
             }
             
             int totalEntradasUsuario = entradaService.contarEntradasUsuario(concierto.getId(), username);
-            BigDecimal totalPagar = concierto.getPrecio().multiply(BigDecimal.valueOf(entradasQR.size()));
+            BigDecimal totalPagar = concierto.getPrecio().multiply(BigDecimal.valueOf(totalEntradasUsuario));
             
             redirectAttributes.addFlashAttribute("entradasQR", entradasQR);
             redirectAttributes.addFlashAttribute("concierto", concierto);
@@ -109,9 +109,9 @@ public class EntradasContoller {
     public String mostrarCompra(Model model) {
         // Si no hay entradas (por acceso directo o recarga), redirige
         if (!model.containsAttribute("entradasQR")) {
-            return "redirect:/MenuEntradas";  // O al inicio, como prefieras
+            return "redirect:/MisConciertos";  
         }
-        return "compras_exito";  // Vista segura, solo accesible tras compra válida
+        return "compras_exito";  
     }
     
     @GetMapping("/validar-json/{codigo}")
@@ -133,7 +133,5 @@ public class EntradasContoller {
             c.getPrecio()
         );
     }
-    
-    
+        
 }
-

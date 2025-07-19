@@ -1,6 +1,7 @@
 package com.ipartek.service;
 
 import com.google.zxing.BarcodeFormat;
+
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -23,14 +24,14 @@ public class QrCodeService {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
 
         Map<EncodeHintType, Object> hints = new HashMap<>();
-        hints.put(EncodeHintType.MARGIN, 3);  // márgenes mínimos
+        hints.put(EncodeHintType.MARGIN, 2);  // márgenes
         hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+        
 
         BitMatrix bitMatrix = qrCodeWriter.encode(texto, BarcodeFormat.QR_CODE, ancho, alto, hints);
         ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
         MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream);
         byte[] pngData = pngOutputStream.toByteArray();
-
         return Base64.getEncoder().encodeToString(pngData);  
     }
     

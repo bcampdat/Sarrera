@@ -21,4 +21,6 @@ public interface EntradaRepository extends JpaRepository<Entrada, Integer> {
     
     Optional<Entrada> findByCodigo(String codigo);
 
+	List<Entrada> findByCodigoStartingWith(String username);
+
 }
