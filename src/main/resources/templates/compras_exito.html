@@ -14,7 +14,9 @@
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/css/menu.css" />
 <link rel="stylesheet" href="/css/ticket.css" />
-
+<link rel="stylesheet" href="/css/pasarela.css" />
+<link rel="stylesheet" href="/css/vendido.css" media="screen" />
+<link rel="stylesheet" href="/css/print.css" />
 </head>
 
 <body>
@@ -23,109 +25,131 @@
 	<div th:replace="_plantilla :: menu"></div>
 
 	<main>
-		<section>
-			<div class="mt-4">
-				<h2 class="mb-4 d-flex align-items-center justify-content-between">
-					<div class="d-flex align-items-center gap-2">
-						<img src="/logo/entradas.jpg" alt="Logo" class="logo-header"
-							style="height: 40px;" /> Compra realizada <span
-							th:text="${concierto.grupo}"></span>
-					</div>
-					<div class="d-flex align-items-center gap-2">
-						<i class="fas fa-user"></i> <span th:text="${username}"
-							class="fw-semibold"></span>
-					</div>
-				</h2>
-				<div class="accordion mt-5" id="resumenCompra">
-					<div class="accordion-item">
-						<h2 class="accordion-header" id="headingResumen">
-							<button class="accordion-button collapsed" type="button"
-								data-bs-toggle="collapse" data-bs-target="#collapseResumen"
-								aria-expanded="false" aria-controls="collapseResumen">
-								Resumen de la compra</button>
-						</h2>
-						<div id="collapseResumen" class="accordion-collapse collapse"
-							aria-labelledby="headingResumen" data-bs-parent="#resumenCompra">
-							<div class="accordion-body">
-								<ul class="list-group list-group-flush">
-									<li
-										class="list-group-item d-flex justify-content-between align-items-center px-0">
-										<div class="d-flex align-items-center gap-2">
-											<i class="fas fa-user"></i> <strong>Usuario:</strong>
-										</div> <span th:text="${username}"></span>
-									</li>
+		<div
+			class="simulador-pasarela d-flex flex-column align-items-center justify-content-center text-center my-5"
+			style="min-height: 300px;">
+			<img src="/logo/entradas.png" alt="Procesando"
+				class="rotate-logo mb-4">
+			<h4 class="text-primary">Procesando el pago...</h4>
+			<p class="text-muted fst-italic">Por favor, espera un momento</p>
+		</div>
+		<div id="contenidoReal" class="contenido-compra">
+			<section>
+				<div class="mt-4">
+					<h2 class="mb-4 d-flex align-items-center justify-content-between">
+						<div class="d-flex align-items-center gap-2">
+							<img src="/logo/entradas.jpg" alt="Logo" class="logo-header"
+								style="height: 40px;" /> Compra realizada <span
+								th:text="${concierto.grupo}"></span>
+						</div>
+						<div class="d-flex align-items-center gap-2">
+							<i class="fas fa-user"></i> <span th:text="${username}"
+								class="fw-semibold"></span>
+						</div>
+					</h2>
+					<div class="accordion mt-5" id="resumenCompra">
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="headingResumen">
+								<button class="accordion-button collapsed" type="button"
+									data-bs-toggle="collapse" data-bs-target="#collapseResumen"
+									aria-expanded="false" aria-controls="collapseResumen">
+									Resumen de la compra</button>
+							</h2>
+							<div id="collapseResumen" class="accordion-collapse collapse"
+								aria-labelledby="headingResumen" data-bs-parent="#resumenCompra">
+								<div class="accordion-body">
+									<ul class="list-group list-group-flush">
+										<li
+											class="list-group-item d-flex justify-content-between align-items-center px-0">
+											<div class="d-flex align-items-center gap-2">
+												<i class="fas fa-user"></i> <strong>Usuario:</strong>
+											</div> <span th:text="${username}"></span>
+										</li>
 
-									<li
-										class="list-group-item d-flex justify-content-between align-items-center px-0">
-										<strong>Número de entradas compradas:</strong> <span
-										th:text="${totalUsuario}"></span>
-									</li>
-									<li
-										class="list-group-item d-flex justify-content-between align-items-center px-0">
-										<strong>Precio por entrada:</strong> <span><span
-											th:text="${concierto.precio}"></span> €</span>
-									</li>
-									<li
-										class="list-group-item d-flex justify-content-between align-items-center px-0">
-										<strong>Total pagado:</strong> <span><span
-											th:text="${totalPagar}"></span> €</span>
-									</li>
+										<li
+											class="list-group-item d-flex justify-content-between align-items-center px-0">
+											<strong>Número de entradas compradas:</strong> <span
+											th:text="${totalUsuario}"></span>
+										</li>
+										<li
+											class="list-group-item d-flex justify-content-between align-items-center px-0">
+											<strong>Precio por entrada:</strong> <span><span
+												th:text="${concierto.precio}"></span> €</span>
+										</li>
+										<li
+											class="list-group-item d-flex justify-content-between align-items-center px-0">
+											<strong>Total pagado:</strong> <span><span
+												th:text="${totalPagar}"></span> €</span>
+										</li>
 
-								</ul>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="ticket-wrapper" th:each="eqr : ${entradasQR}">
+						<div class="ticket-card d-flex flex-md-row flex-column">
+							<div class="ticket-img">
+								<img th:src="@{'/images/' + ${concierto.foto}}" alt="Concierto">
+								<img src="/logo/entradas.png" alt="Logo" class="logo-overlay" />
+							</div>
+							<div class="ticket-info p-4 flex-grow-1">
+								<h5 th:text="${concierto.grupo}">Grupo</h5>
+								<p>
+									Fecha: <span th:text="${concierto.fecha}"></span><br>
+									Sala: <span th:text="${concierto.ubicacion.nombreSala}"></span><br>
+									Dirección: <span th:text="${concierto.ubicacion.direccion}"></span><br>
+									Precio: <span th:text="${concierto.precio}"></span> €
+								</p>
+								<p>
+									<strong>Titular:</strong> <span th:text="${username}"></span>
+								</p>
+
+								<p class="mb-0">
+									<strong>Código:</strong> <span th:text="${eqr.entrada.codigo}"></span>
+								</p>
+							</div>
+
+							<!-- QR -->
+							<div
+								class="ticket-qr pe-5 me-5 d-flex align-items-center justify-content-center">
+								<img th:src="'data:image/png;base64,' + ${eqr.qrBase64}"
+									alt="QR Code">
+							</div>
+
+							<!-- Código de barras vertical en el borde derecho -->
+							<div
+								class="ticket-barcode d-flex align-items-center justify-content-center">
+								<img th:src="'data:image/png;base64,' + ${eqr.barcodeBase64}"
+									alt="Código de barras vertical" class="barcode-vertical" />
 							</div>
 						</div>
 					</div>
 				</div>
-				<br>
-				<div class="ticket-wrapper" th:each="eqr : ${entradasQR}">
-					<div class="ticket-card d-flex flex-md-row flex-column">
-						<div class="ticket-img">
-							<img th:src="@{'/images/' + ${concierto.foto}}" alt="Concierto">
-							<img src="/logo/entradas.png" alt="Logo" class="logo-overlay" />
-						</div>
-						<div class="ticket-info p-4 flex-grow-1">
-							<h5 th:text="${concierto.grupo}">Grupo</h5>
-							<p>
-								Fecha: <span th:text="${concierto.fecha}"></span><br> Sala:
-								<span th:text="${concierto.ubicacion.nombreSala}"></span><br>
-								Dirección: <span th:text="${concierto.ubicacion.direccion}"></span><br>
-								Precio: <span th:text="${concierto.precio}"></span> €
-							</p>
-							<p>
-								<strong>Titular:</strong> <span th:text="${username}"></span>
-							</p>
+			</section>
+		</div>
+		<div class="d-flex justify-content-end mt-4 gap-2">
+			<a href="/" class="rounded-pill small btn btn-success">Continuar comprando</a>
+			<button id="printBtn" class="btn btn-primary rounded-pill small" onclick="imprimir()">Imprimir Entradas</button>
 
-							<p class="mb-0">
-								<strong>Código:</strong> <span th:text="${eqr.entrada.codigo}"></span>
-							</p>
-						</div>
-
-						<!-- QR -->
-						<div
-							class="ticket-qr pe-5 me-5 d-flex align-items-center justify-content-center">
-							<img th:src="'data:image/png;base64,' + ${eqr.qrBase64}"
-								alt="QR Code">
-						</div>
-
-						<!-- Código de barras vertical en el borde derecho -->
-						<div
-							class="ticket-barcode d-flex align-items-center justify-content-center">
-							<img th:src="'data:image/png;base64,' + ${eqr.barcodeBase64}"
-								alt="Código de barras vertical" class="barcode-vertical" />
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<div class="d-flex justify-content-end mt-4">
-			<a href="/" class="w-100 rounded-pill small btn btn-success">Continuar
-				comprando</a>
 		</div>
 	</main>
 
 	<div th:replace="_plantilla :: pie"></div>
 
 	<script src="/js/bootstrap.bundle.min.js"></script>
+	<script>
+	  setTimeout(() => {
+	    document.getElementById('contenidoReal')?.scrollIntoView({ behavior: 'smooth' });
+	  }, 1500);
+	  
+	  function imprimir() {
+		  window.print();
+		}
+
+	</script>
+
 </body>
 
 </html>

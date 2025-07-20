@@ -1,0 +1,33 @@
+/* Marca de agua "VENDIDA" */
+.ticket-info::after {
+  content: "VENDIDA";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-size: 4rem;
+  color: rgba(200, 0, 0, 0.15);
+  font-weight: 1000;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Imagen encima del QR y código de barras */
+.ticket-qr, .ticket-barcode {
+  position: relative;
+}
+
+.ticket-qr::after, .ticket-barcode::after {
+  content: "";
+  position: absolute;
+  background-image: url('/logo/entradas.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 60px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  opacity: 0.9;
+}

@@ -107,7 +107,6 @@ public class EntradasContoller {
 
     @GetMapping("/compras-exito")
     public String mostrarCompra(Model model) {
-        // Si no hay entradas (por acceso directo o recarga), redirige
         if (!model.containsAttribute("entradasQR")) {
             return "redirect:/MisConciertos";  
         }

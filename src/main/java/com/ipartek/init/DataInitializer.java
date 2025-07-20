@@ -39,8 +39,8 @@ public class DataInitializer {
                 Ubicacion.builder().nombreSala("La Salvaje").direccion("Calle Martínez Vigil, 17, Oviedo, Asturias").build(),
                 Ubicacion.builder().nombreSala("Mardi Gras").direccion("Rúa San Pedro de Mezonzo, 1, A Coruña, Galicia").build(),
                 Ubicacion.builder().nombreSala("Sala Capitol").direccion("Rúa do Preguntoiro, 23, Santiago de Compostela, Galicia").build(),
-                Ubicacion.builder().nombreSala("El Gran Café").direccion("Avenida de la Facultad, s/n, León, León").build(),
-                Ubicacion.builder().nombreSala("Studio 54 León").direccion("Calle Cardiles, 2, León, León").build()
+                Ubicacion.builder().nombreSala("El Gran Café").direccion("Avenida de la Facultad, s/n, León").build(),
+                Ubicacion.builder().nombreSala("Studio 54 León").direccion("Calle Cardiles, 2, León").build()
             );
             ubicacionRepo.saveAll(ubicaciones);
             System.out.println("Ubicaciones insertadas.");

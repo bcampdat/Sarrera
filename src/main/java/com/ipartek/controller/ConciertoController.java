@@ -104,7 +104,7 @@ public class ConciertoController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/conciertos";
+		return "redirect:/MenuConciertos";
 	}
 
 	@GetMapping("/modificar")

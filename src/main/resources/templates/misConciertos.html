@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="/css/menu.css" />
 <link rel="stylesheet" href="/css/ticket.css" />
 <link rel="stylesheet" href="/css/misConciertos.css" />
+<link rel="stylesheet" href="/css/vendido.css" />
 </head>
 <body>
 	<div th:replace="_plantilla :: cabecera"></div>
@@ -95,7 +96,7 @@
 
 										<!-- QR -->
 										<div
-											class="ticket-qr d-flex align-items-center justify-content-center">
+											class="ticket-qr pe-5 me-5 d-flex align-items-center justify-content-center">
 											<img th:src="'data:image/png;base64,' + ${eqr.qrBase64}"
 												alt="QR Code" />
 										</div>

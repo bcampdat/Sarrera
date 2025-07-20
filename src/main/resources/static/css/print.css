@@ -1,0 +1,31 @@
+@media print {
+
+  /* Oculta todo */
+  body * {
+    visibility: hidden;
+  }
+  
+  #resumenCompra {
+  display: none !important;
+}
+
+  /* Solo muestra contenidoReal y sus hijos */
+  #contenidoReal,
+  #contenidoReal * {
+    visibility: visible;
+  }
+
+  /* Posiciónalo para que quede arriba y use todo el ancho */
+  #contenidoReal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  /* Opcional: ocultar elementos específicos si no quieres que salgan en impresión */
+  #contenidoReal.no-print {
+    display: none !important;
+  }
+
+}
