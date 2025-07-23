@@ -19,6 +19,7 @@ public class SecurityConfig {
         	.authenticationProvider(validarUsuarioProvider)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/","/login","/registro", "/css/**", "/js/**", "/logo/**","/entradas/validar-json/**", "/concierto/imagen/**").permitAll() 
+                .requestMatchers("/Admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated() 
             )
             .formLogin(form -> form

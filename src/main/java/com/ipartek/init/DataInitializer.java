@@ -22,8 +22,10 @@ public class DataInitializer {
     @PostConstruct
     public void init() {
         insertarUbicacion();
-        ejecutarScriptSQL("MySql/usuario.sql");
         ejecutarScriptSQL("MySql/conciertos.sql");
+        ejecutarScriptSQL("MySql/usuario.sql");
+        ejecutarScriptSQL("MySql/admins.sql");
+        
        
     }
 

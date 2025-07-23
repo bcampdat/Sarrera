@@ -1,0 +1,1 @@
+UPDATE usuarios SET es_admin = TRUE WHERE user = 'hola';

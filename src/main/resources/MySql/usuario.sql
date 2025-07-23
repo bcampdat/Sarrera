@@ -1,5 +1,3 @@
-INSERT IGNORE INTO usuarios (user, pass, salt) VALUES (
-  'hola', 
-  '9e478fd30b48d8254acabcd23f220640d1e74ba31664c8ae21857e0952148d41', 
-  '1a2b3c4d5e6f7890abcdef1234567890'
-);
+INSERT IGNORE INTO usuarios (user, pass, salt) VALUES
+('hola', '9e478fd30b48d8254acabcd23f220640d1e74ba31664c8ae21857e0952148d41', '1a2b3c4d5e6f7890abcdef1234567890'),
+('alain', 'f77484b251040490dfe99ed02b3f08f87097c45723577fa868a6f78b993a3a21', 'bHg6Qfwyk9G/QeYLvGKHIw==');

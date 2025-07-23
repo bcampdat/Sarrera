@@ -3,7 +3,6 @@ package com.ipartek.controller;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.Principal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,9 +69,10 @@ public class IncioController {
 		return "listadoConciertos";
 	}
 
-	@GetMapping("/MenuConciertos")
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/Admin/MenuConciertos")
 	public String cargarConciertos(Model model) {
-		List<Concierto> listaConciertos = conciertoRepo.findByFechaGreaterThanEqualOrderByFechaAsc(LocalDate.now());
+		List<Concierto> listaConciertos = conciertoRepo.findAll();
 		List<Ubicacion> listaUbicaciones = ubicacionRepo.findAll();
 
 		model.addAttribute("listaConciertos", listaConciertos);

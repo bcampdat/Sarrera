@@ -26,4 +26,7 @@ public class Usuario {
     private String pass; 
     
     private String salt;
+    
+    @Column(name = "es_admin")
+    private Boolean esAdmin = false;
 }

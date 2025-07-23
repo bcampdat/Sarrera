@@ -27,7 +27,7 @@
               Por favor, elige otra Sala con mayor capacidad o reduce el aforo.
             </div>
 
-            <form th:action="@{/guardar}" th:object="${concierto}" method="post"
+            <form th:action="@{/Admin/guardar}" th:object="${concierto}" method="post"
                   enctype="multipart/form-data">
               <input type="hidden" th:field="*{id}" />
 

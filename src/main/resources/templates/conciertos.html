@@ -15,7 +15,7 @@
 </head>
 
 <body>
-  <!-- Cabecera + Sidebar -->
+
   <div th:replace="_plantilla :: cabecera"></div>
   <div th:replace="_plantilla :: menu"></div>
 
@@ -23,7 +23,7 @@
     <section class="container-fluid px-4">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="fw-bold text-primary mb-0">Lista de Conciertos</h2>
-        <a th:href="@{/nuevo}" class="btn btn-primary rounded-pill shadow-sm">
+        <a th:href="@{/Admin/nuevo}" class="btn btn-primary rounded-pill shadow-sm">
           <i class="fa fa-plus me-1"></i> Nuevo Concierto
         </a>
       </div>
@@ -59,12 +59,12 @@
                    title="Detalle">
                   <i class="fa fa-eye"></i>
                 </a>
-                <a th:href="@{/modificar(id=${concierto.id})}"
+                <a th:href="@{/Admin/modificar(id=${concierto.id})}"
                    class="btn btn-sm btn-outline-warning rounded-circle me-1"
                    title="Modificar">
                   <i class="fa fa-edit"></i>
                 </a>
-                <a th:href="@{/eliminar(id=${concierto.id})}"
+                <a th:href="@{/Admin/eliminar(id=${concierto.id})}"
                    class="btn btn-sm btn-outline-danger rounded-circle"
                    title="Eliminar">
                   <i class="fa fa-trash"></i>

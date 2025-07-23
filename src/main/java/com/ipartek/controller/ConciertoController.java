@@ -17,6 +17,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,15 +48,16 @@ public class ConciertoController {
 	@Value("${rutaFotos}")
 	private String rutaFotos;
 
-
-	@GetMapping("/nuevo")
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/Admin/nuevo")
 	public String nuevoConcierto(Model model) {
 		model.addAttribute("concierto", new Concierto());
 		model.addAttribute("ubicaciones", ubicacionRepo.findAll());
 		return "nuevoConcierto";
 	}
-
-	@PostMapping("/guardar")
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping("/Admin/guardar")
 	public String guardarConcierto(Model model, @ModelAttribute Concierto concierto, @RequestParam("fotoFile") MultipartFile file) {
 
 		try {
@@ -104,10 +106,11 @@ public class ConciertoController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/MenuConciertos";
+		return "redirect:/Admin/MenuConciertos";
 	}
-
-	@GetMapping("/modificar")
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/Admin/modificar")
 	public String modificarConcierto(@RequestParam int id, Model model) {
 
 		Optional<Concierto> con = conciertoRepo.findById(id);
@@ -117,7 +120,7 @@ public class ConciertoController {
 			model.addAttribute("ubicaciones", ubicacionRepo.findAll());
 			return "nuevoConcierto";
 		}
-		return "redirect:/MenuConciertos";
+		return "redirect:/Admin/MenuConciertos";
 	}
 
 	@GetMapping("/detalle")
@@ -129,8 +132,9 @@ public class ConciertoController {
 		}
 		return "redirect:/detalleConcierto";
 	}
-
-	@GetMapping("/eliminar")
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/Admin/eliminar")
 	public String eliminarConcierto(@RequestParam int id) {
 		Optional<Concierto> optCon = conciertoRepo.findById(id);
 		if (optCon.isPresent()) {

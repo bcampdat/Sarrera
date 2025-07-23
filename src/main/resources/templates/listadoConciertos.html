@@ -51,7 +51,7 @@
 							th:if="${concierto.fecha.isBefore(T(java.time.LocalDate).now())}"
 							class="text-danger fw-bold">Cancelado</span>
 							<a th:if="${concierto.fecha.isBefore(T(java.time.LocalDate).now())}"
-							th:href="@{/eliminar(id=${concierto.id})}"
+							th:href="@{/Admin/eliminar(id=${concierto.id})}"
 							class="btn btn-grey btn-sm ms-1" title="Eliminar"> <i
 								class="fa fa-trash"></i>
 						</a>  <!-- Si es distinto de hoy futuro-->

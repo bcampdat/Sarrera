@@ -78,3 +78,26 @@ footer {
 	padding: 1rem 0;
 	
 }
+
+/* ADMIN ZONE*/
+.admin-header {
+  background-color: #2f3640;
+  color: #dcdde1; 
+  border-bottom: 1px solid #444b52;
+}
+
+.admin-sidebar {
+  background-color: #353b48; 
+  color: #dcdde1;
+  border-right: 1px solid #444b52;
+}
+
+.admin-sidebar .nav-link {
+  color: #dcdde1;
+}
+
+.admin-sidebar .nav-link:hover {
+  background-color: #40739e; 
+   color:#cc9900;
+}
+
