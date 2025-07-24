@@ -117,12 +117,19 @@
 					</div>
 
 				</div>
-
-				<div class="d-flex justify-content-end mt-4">
-					<a href="/" class="w-100 rounded-pill small btn btn-success">Menú
-						Inicio</a>
-				</div>
 			</div>
+
+			<div th:if="${totalGeneral != null}" class="text-end pe-3 mt-4">
+				<h4 class="text-secondary">
+					Total Pagado: <span th:text="${totalGeneral}"></span> €
+				</h4>
+			</div>
+
+			<div class="d-flex justify-content-end mt-4">
+				<a href="/" class="w-100 rounded-pill small btn btn-success">Menú
+					Inicio</a>
+			</div>
+
 		</section>
 	</main>
 

@@ -117,6 +117,8 @@ public class IncioController {
 		List<ConciertoTikDTO> listaDTO = new ArrayList<>();
 		// String baseUrl = "http://SARRERA-NIRE/entradas/validar-json/";
 		String baseUrl = "http://http://localhost:8080//entradas/validar-json/";
+		
+		 BigDecimal totalGeneral = BigDecimal.ZERO;
 
 		for (Map.Entry<Concierto, List<Entrada>> entry : entradasPorConcierto.entrySet()) {
 			Concierto concierto = entry.getKey();
@@ -124,7 +126,8 @@ public class IncioController {
 
 			int numEntradas = entradas.size();
 			BigDecimal totalPagado = concierto.getPrecio().multiply(BigDecimal.valueOf(numEntradas));
-
+			totalGeneral = totalGeneral.add(totalPagado);
+			
 			List<EntradaQR> entradasQR = new ArrayList<>();
 			for (Entrada e : entradas) {
 				try {
@@ -149,6 +152,7 @@ public class IncioController {
 		}
 
 		model.addAttribute("conciertosEntradas", listaDTO);
+		 model.addAttribute("totalGeneral", totalGeneral);
 
 		return "misConciertos";
 	}
@@ -160,43 +164,62 @@ public class IncioController {
 		List<Entrada> todasLasEntradas = entradaRepo.findAll();
 
 		Map<String, Map<Concierto, List<Entrada>>> entradasPorUsuario = todasLasEntradas.stream()
-				.collect(Collectors.groupingBy(e -> {
-					String codigo = e.getCodigo();
-					return codigo != null && codigo.contains("-") ? codigo.split("-")[0] : "desconocido";
-				}, Collectors.groupingBy(Entrada::getConcierto)));
+			.collect(Collectors.groupingBy(e -> {
+				String codigo = e.getCodigo();
+				return codigo != null && codigo.contains("-") ? codigo.split("-")[0] : "desconocido";
+			}, Collectors.groupingBy(Entrada::getConcierto)));
 
 		Map<String, List<ConciertoTikDTO>> ventasPorUsuario = new LinkedHashMap<>();
+		Map<String, BigDecimal> totalesPorUsuario = new LinkedHashMap<>();
 
 		String baseUrl = "http://localhost:8080/entradas/validar-json/";
+		
+		BigDecimal totalVentas = BigDecimal.ZERO;
 
-		entradasPorUsuario.forEach((username, conciertosMap) -> {
+		for (Map.Entry<String, Map<Concierto, List<Entrada>>> usuarioEntry : entradasPorUsuario.entrySet()) {
+			String username = usuarioEntry.getKey();
+			Map<Concierto, List<Entrada>> conciertosMap = usuarioEntry.getValue();
+
 			List<ConciertoTikDTO> listaConciertosDTO = new ArrayList<>();
+			BigDecimal totalUsuario = BigDecimal.ZERO;
 
-			conciertosMap.forEach((concierto, entradas) -> {
+			for (Map.Entry<Concierto, List<Entrada>> conciertoEntry : conciertosMap.entrySet()) {
+				Concierto concierto = conciertoEntry.getKey();
+				List<Entrada> entradas = conciertoEntry.getValue();
+
 				int numEntradas = entradas.size();
 				BigDecimal totalPagado = concierto.getPrecio().multiply(BigDecimal.valueOf(numEntradas));
 
-				List<EntradaQR> entradasQR = entradas.stream().map(e -> {
+				// Acumular totales
+				totalVentas = totalVentas.add(totalPagado);
+				totalUsuario = totalUsuario.add(totalPagado);
+
+				List<EntradaQR> entradasQR = new ArrayList<>();
+				for (Entrada e : entradas) {
 					try {
 						String qrBase64 = QrCodeServ.generarCodigoQR(baseUrl + e.getCodigo(), 200, 200);
 						String barcodeBase64 = QrCodeServ.generarCodigoBarra(e.getCodigo(), 150, 100);
-						return new EntradaQR(e, qrBase64, barcodeBase64);
+						entradasQR.add(new EntradaQR(e, qrBase64, barcodeBase64));
 					} catch (Exception ex) {
 						ex.printStackTrace();
-						return new EntradaQR(e, "", "");
+						entradasQR.add(new EntradaQR(e, "", ""));
 					}
-				}).toList();
+				}
 
 				ConciertoTikDTO dto = new ConciertoTikDTO(concierto, entradas, numEntradas, totalPagado, entradasQR);
 				listaConciertosDTO.add(dto);
-			});
+			}
 
 			ventasPorUsuario.put(username, listaConciertosDTO);
-		});
+			totalesPorUsuario.put(username, totalUsuario);
+		}
 
 		model.addAttribute("ventasPorUsuario", ventasPorUsuario);
+		model.addAttribute("totalesPorUsuario", totalesPorUsuario);
+		model.addAttribute("totalVentas", totalVentas);
 
 		return "misVentas";
 	}
+
 
 }

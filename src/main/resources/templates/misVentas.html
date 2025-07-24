@@ -28,13 +28,21 @@
 					</div>
 				</h2>
 
-				<div th:if="${ventasPorUsuario != null and !ventasPorUsuario.isEmpty()}">
+				<div
+					th:if="${ventasPorUsuario != null and !ventasPorUsuario.isEmpty()}">
 
 					<!-- Iterar por cada usuario -->
 					<div th:each="usuario, iterUsuario : ${ventasPorUsuario}">
-						<h3 style="margin-top: 2rem;" th:text="'Usuario: ' + ${usuario.key}">Usuario</h3>
+						<div
+							class="d-flex justify-content-between align-items-center pe-3 mt-4">
+							<h3 class="mb-0" th:text="'Usuario: ' + ${usuario.key}">Usuario</h3>
+							<h5 class="mb-0 text-muted"
+								th:text="${totalesPorUsuario[usuario.key]} + ' €'">0.00 €</h5>
+						</div>
 
-						<div class="accordion" th:id="'accordionUsuario-' + ${iterUsuario.index}">
+
+						<div class="accordion"
+							th:id="'accordionUsuario-' + ${iterUsuario.index}">
 
 							<!-- Iterar por cada concierto para este usuario -->
 							<div class="accordion-item"
@@ -50,7 +58,8 @@
 									</button>
 								</h2>
 
-								<div th:id="'collapse-' + ${iterUsuario.index} + '-' + ${iterConcierto.index}"
+								<div
+									th:id="'collapse-' + ${iterUsuario.index} + '-' + ${iterConcierto.index}"
 									class="accordion-collapse collapse"
 									th:attr="aria-labelledby='heading-' + ${iterUsuario.index} + '-' + ${iterConcierto.index}"
 									th:data-bs-parent="'#accordionUsuario-' + ${iterUsuario.index}">
@@ -59,7 +68,7 @@
 										<p class="small text-dark d-flex gap-3 flex-wrap">
 											<span class="bg-light px-2 rounded shadow-sm"> <strong>Fecha:</strong>
 												<span
-													th:text="${#temporals.format(dto.concierto.fecha, 'dd/MM/yyyy')}"></span>
+												th:text="${#temporals.format(dto.concierto.fecha, 'dd/MM/yyyy')}"></span>
 											</span> <span class="bg-light px-2 rounded shadow-sm"> <strong>Entradas:</strong>
 												<span th:text="${dto.numeroEntradas}"></span>
 											</span> <span class="bg-light px-2 rounded shadow-sm"> <strong>Total:</strong>
@@ -75,8 +84,8 @@
 												<!-- Imagen con logo -->
 												<div class="ticket-img">
 													<img th:src="@{'/images/' + ${dto.concierto.foto}}"
-														alt="Concierto" /> <img src="/logo/entradas.png" alt="Logo"
-														class="logo-overlay" />
+														alt="Concierto" /> <img src="/logo/entradas.png"
+														alt="Logo" class="logo-overlay" />
 												</div>
 
 												<!-- Info ticket -->
@@ -85,7 +94,8 @@
 													<p>
 														Fecha: <span
 															th:text="${#temporals.format(dto.concierto.fecha, 'dd/MM/yyyy')}"></span><br />
-														Sala: <span th:text="${dto.concierto.ubicacion.nombreSala}"></span><br />
+														Sala: <span
+															th:text="${dto.concierto.ubicacion.nombreSala}"></span><br />
 														Dirección: <span
 															th:text="${dto.concierto.ubicacion.direccion}"></span><br />
 														Precio: <span th:text="${dto.concierto.precio}"></span> €
@@ -106,7 +116,8 @@
 												<!-- Código de barras vertical -->
 												<div
 													class="ticket-barcode d-flex align-items-center justify-content-center">
-													<img th:src="'data:image/png;base64,' + ${eqr.barcodeBase64}"
+													<img
+														th:src="'data:image/png;base64,' + ${eqr.barcodeBase64}"
 														alt="Código de barras vertical" class="barcode-vertical" />
 												</div>
 
@@ -115,12 +126,17 @@
 
 									</div>
 								</div>
-							</div> <!-- fin accordion-item concierto -->
+							</div>
 
-						</div> <!-- fin accordion usuario -->
+						</div>
 
-					</div> <!-- fin each usuario -->
+					</div>
 
+				</div>
+				<div th:if="${totalVentas != null}" class="text-end pe-3 mt-4">
+					<h4 class="text-secondary">
+						Total Vendido: <span th:text="${totalVentas}"></span> €
+					</h4>
 				</div>
 
 				<div class="d-flex justify-content-end mt-4">
