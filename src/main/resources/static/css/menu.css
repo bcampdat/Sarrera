@@ -86,6 +86,14 @@ footer {
   border-bottom: 1px solid #444b52;
 }
 
+.admin-header i,
+.admin-header div,
+.admin-header span,
+.admin-header button {
+  color: #dcdde1 !important;
+}
+
+
 .admin-sidebar {
   background-color: #353b48; 
   color: #dcdde1;

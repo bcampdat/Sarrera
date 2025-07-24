@@ -1,7 +1,7 @@
 <!-- CABECERA -->
 <div th:fragment="cabecera">
 	<header class="dashboard-header d-flex justify-content-between align-items-center px-4"
-		th:classappend="${#authorization.expression('hasRole(''ADMIN'')')} ? ' admin-sidebar' : ''">
+		th:classappend="${#authorization.expression('hasRole(''ADMIN'')')} ? ' admin-header': ''">
 		<div id="header_izq" class="d-flex align-items-center gap-3">
 			<img src="/logo/entradas.png" alt="Logo" class="logo-header">
 			<h1 class="mb-0 fs-4 fw-bold text-primary">SARRERA</h1>
@@ -37,7 +37,8 @@
 			<li class="nav-item"><a th:href="@{/MenuSalas}" class="nav-link">
 					Salas</a></li>
 			<li class="nav-item"><a th:href="@{/MenuEntradas}" class="nav-link">Entradas</a></li>
-			<li class="nav-item"><a th:href="@{/MisConciertos}" class="nav-link">Mis Conciertos</a></li>
+			<li class="nav-item" sec:authorize="!hasRole('ADMIN')"><a th:href="@{/MisConciertos}" class="nav-link">Mis Conciertos</a></li>
+			<li class="nav-item" sec:authorize="hasRole('ADMIN')"> <a class="nav-link" th:href="@{/Admin/MisVentas}">Mis ventas</a></li>
 		</ul>
 
 		<div class="text-center mt-4">

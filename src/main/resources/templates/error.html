@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="icon" type="image/png" href="/logo/entradas.png">
+
+	<title>Error - Sarrera</title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/css/menu.css" />
+
+	<style>
+		body {
+			background: #f8f9fa;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			color: #212529;
+		}
+
+		.error-container {
+			max-width: 600px;
+			margin: 6rem auto;
+			padding: 3rem 2.5rem;
+			background: white;
+			border-radius: 1rem;
+			box-shadow: 0 0 25px rgba(13, 110, 253, 0.2);
+			text-align: center;
+			position: relative;
+			overflow: visible;
+		}
+
+		.error-icon-wrapper {
+			position: relative;
+			display: inline-block;
+			margin-bottom: 1.8rem;
+			width: 180px;
+			height: 80px;
+		}
+
+		/* Iconos principales */
+		.fa-guitar {
+			font-size: 5.5rem;
+			color: #0d6efd;
+			animation: pulse 2.5s infinite ease-in-out;
+			position: absolute;
+			left: 0;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		.fa-microphone {
+			font-size: 4rem;
+			color: #66b2ff;
+			position: absolute;
+			left: 60px;
+			top: 50%;
+			transform: translateY(-50%);
+			animation: floatUpDown 3s ease-in-out infinite;
+		}
+
+		.fa-volume-high {
+			font-size: 3.5rem;
+			color: #66b2ff;
+			position: absolute;
+			right: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			animation: rotateShake 2s infinite ease-in-out;
+		}
+
+		@keyframes pulse {
+			0%, 100% {
+				transform: translateY(-50%) scale(1);
+				opacity: 1;
+			}
+			50% {
+				transform: translateY(-50%) scale(1.2);
+				opacity: 0.7;
+			}
+		}
+
+		@keyframes floatUpDown {
+			0%, 100% {
+				transform: translateY(0);
+				opacity: 1;
+			}
+			50% {
+				transform: translateY(-10px);
+				opacity: 0.8;
+			}
+		}
+
+		@keyframes rotateShake {
+			0%, 100% {
+				transform: translateY(-50%) rotate(0deg);
+			}
+			25% {
+				transform: translateY(-50%) rotate(10deg);
+			}
+			75% {
+				transform: translateY(-50%) rotate(-10deg);
+			}
+		}
+
+		h1 {
+			font-size: 2.8rem;
+			font-weight: 700;
+			margin-bottom: 1rem;
+			color: #0d6efd;
+			animation: fadeInDown 0.8s ease forwards;
+			opacity: 0;
+			transform: translateY(-20px);
+		}
+
+		@keyframes fadeInDown {
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		p.quote {
+			font-size: 1.15rem;
+			font-style: italic;
+			margin-bottom: 1.7rem;
+			color: #495057;
+			white-space: nowrap;
+			overflow: hidden;
+			border-right: 3px solid #0d6efd;
+			width: 0;
+			animation: typing 4s steps(45, end) forwards, blink-caret 0.75s step-end infinite;
+		}
+
+		@keyframes typing {
+			from {
+				width: 0;
+			}
+			to {
+				width: 100%;
+			}
+		}
+
+		@keyframes blink-caret {
+			0%, 100% {
+				border-color: transparent;
+			}
+			50% {
+				border-color: #0d6efd;
+			}
+		}
+
+		.btn-primary {
+			background-color: #0d6efd;
+			border: none;
+			padding: 0.75rem 1.5rem;
+			font-weight: 600;
+			font-size: 1.1rem;
+			border-radius: 30px;
+			box-shadow: 0 0 15px #0d6efd;
+			transition: box-shadow 0.3s ease, background-color 0.3s ease;
+		}
+
+		.btn-primary:hover {
+			background-color: #0b5ed7;
+			box-shadow: 0 0 30px #0b5ed7, 0 0 40px #3a7bd5;
+		}
+	</style>
+</head>
+
+<body>
+	<div th:replace="_plantilla :: cabecera"></div>
+	<div th:replace="_plantilla :: menu"></div>
+
+	<main>
+		<section class="error-container">
+			<div class="error-icon-wrapper">
+				<i class="fas fa-guitar"></i>
+				<i class="fas fa-microphone"></i>
+				<i class="fas fa-volume-high"></i>
+			</div>
+
+			<h1>¡Estás fuera de pista!</h1>
+			<p class="quote">"La música no se detiene, solo cambia de ritmo." — Anónimo</p>
+			<a href="/" class="btn btn-primary">
+				<i class="fas fa-ticket-alt"></i> Volver al escenario principal
+			</a>
+		</section>
+	</main>
+
+	<div th:replace="_plantilla :: pie"></div>
+	<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

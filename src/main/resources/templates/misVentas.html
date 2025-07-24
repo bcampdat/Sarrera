@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/png" href="/logo/entradas.png">
+<title>Mis Ventas</title>
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/menu.css" />
+<link rel="stylesheet" href="/css/ticket.css" />
+<link rel="stylesheet" href="/css/misConciertos.css" />
+<link rel="stylesheet" href="/css/vendido.css" />
+</head>
+<body>
+	<div th:replace="_plantilla :: cabecera"></div>
+	<div th:replace="_plantilla :: menu"></div>
+
+	<main>
+		<section>
+			<div class="container mt-4">
+				<h2 class="d-flex align-items-center justify-content-between px-2"
+					style="font-size: 1.6rem;">
+					<div class="d-flex align-items-center gap-1">
+						<i class="fas fa-money-bill-wave"></i> Mis Ventas
+					</div>
+				</h2>
+
+				<div th:if="${ventasPorUsuario != null and !ventasPorUsuario.isEmpty()}">
+
+					<!-- Iterar por cada usuario -->
+					<div th:each="usuario, iterUsuario : ${ventasPorUsuario}">
+						<h3 style="margin-top: 2rem;" th:text="'Usuario: ' + ${usuario.key}">Usuario</h3>
+
+						<div class="accordion" th:id="'accordionUsuario-' + ${iterUsuario.index}">
+
+							<!-- Iterar por cada concierto para este usuario -->
+							<div class="accordion-item"
+								th:each="dto, iterConcierto : ${usuario.value}">
+								<h2 class="accordion-header"
+									th:id="'heading-' + ${iterUsuario.index} + '-' + ${iterConcierto.index}">
+									<button class="accordion-button collapsed" type="button"
+										data-bs-toggle="collapse"
+										th:data-bs-target="'#collapse-' + ${iterUsuario.index} + '-' + ${iterConcierto.index}"
+										th:aria-controls="'collapse-' + ${iterUsuario.index} + '-' + ${iterConcierto.index}"
+										aria-expanded="false" style="font-size: 1rem;">
+										<span th:text="${dto.concierto.grupo}">Grupo</span>
+									</button>
+								</h2>
+
+								<div th:id="'collapse-' + ${iterUsuario.index} + '-' + ${iterConcierto.index}"
+									class="accordion-collapse collapse"
+									th:attr="aria-labelledby='heading-' + ${iterUsuario.index} + '-' + ${iterConcierto.index}"
+									th:data-bs-parent="'#accordionUsuario-' + ${iterUsuario.index}">
+									<div class="accordion-body" style="font-size: 1.2rem;">
+
+										<p class="small text-dark d-flex gap-3 flex-wrap">
+											<span class="bg-light px-2 rounded shadow-sm"> <strong>Fecha:</strong>
+												<span
+													th:text="${#temporals.format(dto.concierto.fecha, 'dd/MM/yyyy')}"></span>
+											</span> <span class="bg-light px-2 rounded shadow-sm"> <strong>Entradas:</strong>
+												<span th:text="${dto.numeroEntradas}"></span>
+											</span> <span class="bg-light px-2 rounded shadow-sm"> <strong>Total:</strong>
+												<span th:text="${dto.totalPagado}"></span> €
+											</span>
+										</p>
+
+										<div th:each="eqr : ${dto.entradasQR}"
+											class="ticket-wrapper small-ticket">
+											<div
+												class="ticket-card d-flex flex-row align-items-stretch position-relative">
+
+												<!-- Imagen con logo -->
+												<div class="ticket-img">
+													<img th:src="@{'/images/' + ${dto.concierto.foto}}"
+														alt="Concierto" /> <img src="/logo/entradas.png" alt="Logo"
+														class="logo-overlay" />
+												</div>
+
+												<!-- Info ticket -->
+												<div class="ticket-info p-3 flex-grow-1">
+													<h5 th:text="${dto.concierto.grupo}">Grupo</h5>
+													<p>
+														Fecha: <span
+															th:text="${#temporals.format(dto.concierto.fecha, 'dd/MM/yyyy')}"></span><br />
+														Sala: <span th:text="${dto.concierto.ubicacion.nombreSala}"></span><br />
+														Dirección: <span
+															th:text="${dto.concierto.ubicacion.direccion}"></span><br />
+														Precio: <span th:text="${dto.concierto.precio}"></span> €
+													</p>
+													<p class="mb-0">
+														<strong>Código:</strong> <span
+															th:text="${eqr.entrada.codigo}"></span>
+													</p>
+												</div>
+
+												<!-- QR -->
+												<div
+													class="ticket-qr pe-5 me-5 d-flex align-items-center justify-content-center">
+													<img th:src="'data:image/png;base64,' + ${eqr.qrBase64}"
+														alt="QR Code" />
+												</div>
+
+												<!-- Código de barras vertical -->
+												<div
+													class="ticket-barcode d-flex align-items-center justify-content-center">
+													<img th:src="'data:image/png;base64,' + ${eqr.barcodeBase64}"
+														alt="Código de barras vertical" class="barcode-vertical" />
+												</div>
+
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div> <!-- fin accordion-item concierto -->
+
+						</div> <!-- fin accordion usuario -->
+
+					</div> <!-- fin each usuario -->
+
+				</div>
+
+				<div class="d-flex justify-content-end mt-4">
+					<a href="/" class="w-100 rounded-pill small btn btn-success">Menú
+						Inicio</a>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<div th:replace="_plantilla :: pie"></div>
+	<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
